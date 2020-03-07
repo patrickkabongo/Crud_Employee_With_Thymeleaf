@@ -70,7 +70,7 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/delete")
-	public String deleteEmployee(@RequestParam("customerId") int theId) {
+	public String deleteEmployee(@RequestParam("employeeId") int theId) {
 		
 		// delete the employee
 		employeeService.deleteById(theId);
