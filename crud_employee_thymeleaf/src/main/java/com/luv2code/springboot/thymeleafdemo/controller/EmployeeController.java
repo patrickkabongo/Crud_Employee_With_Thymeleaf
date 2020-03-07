@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.luv2code.springboot.thymeleafdemo.entity.Employee;
 import com.luv2code.springboot.thymeleafdemo.service.EmployeeService;
@@ -50,6 +51,29 @@ public class EmployeeController {
 	public String saveEmployee(@ModelAttribute("employee") Employee theEmployee) {
 		// save the employee using our service
 		employeeService.save(theEmployee);
+		
+		return "redirect:/employees/list";
+	}
+	
+	@GetMapping("/showFormForUpdate")
+	public String showFormForUpdate(@RequestParam("employeeId") int theId, Model theModel) {
+		
+		// get the employee from the database
+		Employee theEmployee = employeeService.findById(theId);
+		
+		// set employee as a model attribute to pre-population the form
+		theModel.addAttribute("employee", theEmployee);
+		
+		// send over to our form	
+		
+		return "employees/employee-form";
+	}
+	
+	@GetMapping("/delete")
+	public String deleteEmployee(@RequestParam("customerId") int theId) {
+		
+		// delete the employee
+		employeeService.deleteById(theId);
 		
 		return "redirect:/employees/list";
 	}
